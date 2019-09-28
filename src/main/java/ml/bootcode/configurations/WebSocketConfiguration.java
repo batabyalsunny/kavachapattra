@@ -5,6 +5,7 @@ package ml.bootcode.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -15,6 +16,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  */
 @Configuration
 @EnableWebSocketMessageBroker
+@EnableAsync
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
 	@Override
@@ -22,6 +24,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
 		// Enable simple message broker to an endpoint.
 		registry.enableSimpleBroker("/chat");
+		registry.setApplicationDestinationPrefixes("/app");
 	}
 
 	@Override

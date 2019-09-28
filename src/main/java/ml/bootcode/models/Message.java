@@ -3,12 +3,10 @@
  */
 package ml.bootcode.models;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -18,14 +16,13 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class User {
+public class Message {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String email;
+	private String content;
 	private String chatId;
 
-	@OneToMany(mappedBy = "sender")
-	private List<Message> messages;
+	@ManyToOne
+	private User sender;
 }
