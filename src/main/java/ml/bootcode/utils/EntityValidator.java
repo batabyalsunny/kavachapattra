@@ -17,7 +17,7 @@ public class EntityValidator<E> {
 	public E validate(Optional<E> entityOptional) {
 
 		if (!entityOptional.isPresent()) {
-//			throw new ApiException("Entity not found");
+			throw new RuntimeException("Entity not found");
 		}
 
 		return entityOptional.get();

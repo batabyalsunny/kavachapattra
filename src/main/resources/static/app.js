@@ -22,9 +22,33 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/chat/recieve/' + $("#ownUserId").val(), function (greeting) {
-            showMessages(JSON.parse(greeting.body).content);
-        });
+        initChat();
+    });
+}
+
+function getConnectedUsers() {
+	stompClient.subscribe('/queue/users/', function (response) {
+		showUsers(JSON.parse(response.body));
+    });
+}
+
+function initChat() {
+	
+	// Send the init request.
+	stompClient.send("/chat/init", {}, JSON.stringify({'userId': $('#ownUserId').val()}));
+
+	// Get own connection id.
+	stompClient.subscribe("/queue/init/ack", response => {
+		var connectionId = JSON.parse(response.body).connectionId;
+		getConnectedUsers();
+		getMessages(connectionId);
+	});
+}
+
+function getMessages(connectionId) {
+	// Subscribe to own connection id.
+	stompClient.subscribe('/queue/recieve/' + connectionId, message => {
+        showMessages(JSON.parse(message.body).content);
     });
 }
 
@@ -36,12 +60,16 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendMessage() {
-    stompClient.send("/send/" + $("#toUserId").val(), {}, JSON.stringify({'content': $("#message").val()}));
+function sendMessage(chatId) {
+    stompClient.send("/chat/send/" + chatId, {}, JSON.stringify({'content': $("#message").val()}));
 }
 
 function showMessages(message) {
     $("#messages").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showUsers(user) {
+	$("#users").append("<tr><td>" + user + "</td></tr>");
 }
 
 $(function () {
@@ -49,5 +77,5 @@ $(function () {
         e.preventDefault();
     });
     $( "#connect" ).click(function() { connect(); });
-    $( "#send" ).click(function() { sendMessage(); });
+    $( "#send" ).click(function() { sendMessage('6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b'); });
 });

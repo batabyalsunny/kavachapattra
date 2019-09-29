@@ -3,6 +3,8 @@
  */
 package ml.bootcode.configurations;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -23,12 +25,17 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 
 		// Enable simple message broker to an endpoint.
-		registry.enableSimpleBroker("/chat");
-		registry.setApplicationDestinationPrefixes("/app");
+		registry.enableSimpleBroker("/queue");
+		registry.setApplicationDestinationPrefixes("/chat");
 	}
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/join").withSockJS();
+	}
+
+	@Bean
+	public ModelMapper getMapper() {
+		return new ModelMapper();
 	}
 }

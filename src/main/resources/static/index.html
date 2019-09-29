@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Kavachapattra - A Collaborative Online Canvas</title>
-	<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/main.css" rel="stylesheet">
-	<script src="/webjars/jquery/jquery.min.js"></script>
-	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
-	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-	<script src="/app.js"></script>
+<meta charset="UTF-8">
+<title>Kavachapattra - A Collaborative Online Canvas</title>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/main.css" rel="stylesheet">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
 </head>
 <body>
 
@@ -26,17 +26,16 @@
 			<div class="col-md-6">
 				<form class="form-inline">
 					<div class="form-group">
-						To: <input type="text" name="toUserId" id="toUserId">
-						Own: <input type="text" name="ownUserId" id="ownUserId">
-						<button id="connect" class="btn btn-primary"
-						type="submit">Connect</button>
+						To: <input type="text" name="toUserId" id="toUserId"> Own:
+						<input type="text" name="ownUserId" id="ownUserId">
+						<button id="connect" class="btn btn-primary" type="submit">Connect</button>
 					</div>
 				</form>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-8">
 				<table id="conversation" class="table table-striped">
 					<thead>
 						<tr>
@@ -47,17 +46,27 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="col-md-4">
+				<table id="connected-users" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Users</th>
+						</tr>
+					</thead>
+					<tbody id="users">
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="row fixed-bottom">
 			<div class="col-md-12">
 				<form class="form-inline">
 					<div class="form-group">
 						<input type="text" id="message" class="form-control"
-						placeholder="Wrte something cool">
+							placeholder="Wrte something cool">
 					</div>
 					<button id="send" class="btn btn-default" type="submit">
-						Send
-					</button>
+						Send</button>
 				</form>
 			</div>
 		</div>
