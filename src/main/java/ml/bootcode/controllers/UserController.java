@@ -3,9 +3,13 @@
  */
 package ml.bootcode.controllers;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +27,6 @@ public class UserController {
 
 	private UserService userService;
 
-	@Value("${ml.bootcode.message}")
-	private String message;
-
 	/**
 	 * @param userService
 	 */
@@ -33,13 +34,28 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	@GetMapping
+	public List<UserDto> getUsers() {
+		return userService.getUsers();
+	}
+
+	@GetMapping("{id}")
+	public UserDto getUser(@PathVariable Long id) {
+		return userService.getUser(id);
+	}
+
 	@PostMapping
 	public UserDto addUser(@RequestBody UserDto userDto) {
 		return userService.addUser(userDto);
 	}
 
-	@GetMapping
-	public String getMessage() {
-		return message;
+	@PutMapping("{id}")
+	public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+		return userService.updateUser(id, userDto);
+	}
+
+	@DeleteMapping("{id}")
+	public void deleteUser(@PathVariable Long id) {
+		userService.deleteUser(id);
 	}
 }
